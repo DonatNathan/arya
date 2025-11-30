@@ -17,12 +17,12 @@ class Arya {
         std::mutex m_audioMutex;
         std::string lastTranscript;
         ContinuousRecorder m_rec;
-
+        
     public:
         Arya();
-       ~Arya();
-       void CheckEvents();
-       void Update();
-       void WhisperLoop();
-       std::vector<float> resampleTo16k(const std::vector<int16_t>& pcm44100);
+        ~Arya();
+        void CheckEvents();
+        void Update();
+        void WhisperLoop();
+        std::vector<float> resampleTo16k(const std::vector<int16_t>& pcm44100);
 };

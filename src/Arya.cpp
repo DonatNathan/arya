@@ -6,18 +6,20 @@ Arya::Arya()
 {
     if (!sf::SoundBufferRecorder::isAvailable()) {
         std::cerr << "No audio input available on your device" << std::endl;
+        exit(1);
     }
 
-    if (!m_rec.start(44100))
+    if (!m_rec.start(44100)) {
         std::cerr << "Failed to start Arya's continuous recorder" << std::endl;
+        exit(1);
+    }
 
-    std::thread t(&Arya::WhisperLoop, this);
-    t.detach();
+    std::thread whisperThread(&Arya::WhisperLoop, this);
+    whisperThread.detach();
     
     while (true) {
         Update();
     }
-    
 };
 
 Arya::~Arya()
@@ -35,7 +37,6 @@ void Arya::Update()
     if (!lastTranscript.empty()) {
         lastTranscript.clear();
     }
-    sf::sleep(sf::milliseconds(100));
 };
 
 void Arya::WhisperLoop()
@@ -47,16 +48,22 @@ void Arya::WhisperLoop()
     whisper_context* ctx = whisper_init_from_file_with_params("../external/whisper.cpp/models/ggml-base.en.bin", {});
 
     while (true) {
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+
+        if (!m_rec.readyToTranscribe) {
+            continue;
+        }
+
+        m_rec.readyToTranscribe = false;
 
         // --- Get audio chunk ---
         std::vector<int16_t> pcm;
         {
             std::lock_guard<std::mutex> lock(m_audioMutex);
-            if (m_audioBuffer.size() < 44100) continue;
             pcm = m_audioBuffer;
             m_audioBuffer.clear();
         }
+
+        if (pcm.empty()) continue;
 
         // --- Resample ---
         std::vector<float> mono16k = resampleTo16k(pcm);

@@ -2,6 +2,9 @@
 #include <iostream>
 #include <vector>
 #include <mutex>
+#include <cmath>
+#include <atomic>
+#include "donat_lib/Globals.hpp"
 
 #pragma once
 
@@ -16,5 +19,7 @@ class ContinuousRecorder : public sf::SoundRecorder {
         void onStop() override;
 
     public:
+        std::atomic<bool> readyToTranscribe{false};
         ContinuousRecorder(std::vector<int16_t>& sharedBuffer, std::mutex& mtx);
+        float computeRMS(const int16_t* samples, size_t count);
 };
