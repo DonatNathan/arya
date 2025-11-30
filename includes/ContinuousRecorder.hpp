@@ -1,33 +1,20 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
+#include <mutex>
 
 #pragma once
 
 class ContinuousRecorder : public sf::SoundRecorder {
-    bool onStart() override
-    {
-        std::cout << "Recording started\n";
-        return true;
-    }
+    private:
+        std::vector<int16_t>& buffer;
+        std::mutex& bufferMutex;
 
-    bool onProcessSamples(const std::int16_t* samples, std::size_t sampleCount) override
-    {
-        std::cout << "Received " << sampleCount << " samples\n";
+    protected:
+        bool onStart() override;
+        bool onProcessSamples(const std::int16_t* samples, std::size_t sampleCount) override;
+        void onStop() override;
 
-        // ---- Example use cases ----
-        // 1. Push samples into a queue for a background thread
-        // 2. Send samples over websocket to a speech API
-        // 3. Run DSP / VAD / hotword detection
-        // 4. Save a rolling buffer for Whisper.cpp
-
-        // buffer.insert(buffer.end(), samples, samples + sampleCount);
-
-        return true;
-    }
-
-    void onStop() override
-    {
-        std::cout << "Recording stopped\n";
-    }
+    public:
+        ContinuousRecorder(std::vector<int16_t>& sharedBuffer, std::mutex& mtx);
 };

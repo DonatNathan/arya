@@ -16,6 +16,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFML)
 
+add_subdirectory(external/whisper.cpp)
+
 file(GLOB library_sources "src/*.cpp" "src/donat_lib/*.cpp")
 add_library(GraphicalGameLib ${library_sources})
 target_include_directories(GraphicalGameLib PUBLIC includes)
@@ -24,12 +26,14 @@ target_link_libraries(GraphicalGameLib
     SFML::Graphics
     SFML::Window
     SFML::System
+    whisper
 )
 
 add_executable(Arya src/main.cpp)
 target_include_directories(Arya PRIVATE includes)
 target_link_libraries(Arya
     GraphicalGameLib
+    whisper
 )
 
 set_target_properties(Arya PROPERTIES

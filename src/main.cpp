@@ -4,10 +4,10 @@ int main(int argc, char **argv)
 {
     std::cout << "Hello Arya!" << std::endl;
 
-    MyWindow window("Arya", sf::VideoMode::getDesktopMode());
+    // MyWindow window("Arya", sf::VideoMode::getDesktopMode());
     Arya arya;
 
-    window.Init();
+    // window.Init();
 
     return 0;
 };
