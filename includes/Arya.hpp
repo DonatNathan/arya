@@ -1,28 +1,25 @@
 #include <iostream>
-#include <thread>
-#include <chrono>
-#include <mutex>
 #include <vector>
-#include <cstring>
-#include <SFML/Audio.hpp>
-#include <SFML/Window.hpp>
+
 #include "ContinuousRecorder.hpp"
-#include "whisper.h"
+#include "SpeechRecognizer.hpp"
 
 #pragma once
 
 class Arya {
+
     private:
-        std::vector<int16_t> m_audioBuffer;
-        std::mutex m_audioMutex;
-        std::string lastTranscript;
-        ContinuousRecorder m_rec;
+        std::vector<int16_t> a_audioBuffer;
+        std::mutex a_audioMutex;
+        std::string a_lastTranscript;
+
+        ContinuousRecorder a_recorder;
+        SpeechRecognizer a_recognizer;
         
     public:
         Arya();
         ~Arya();
         void CheckEvents();
         void Update();
-        void WhisperLoop();
-        std::vector<float> resampleTo16k(const std::vector<int16_t>& pcm44100);
+
 };

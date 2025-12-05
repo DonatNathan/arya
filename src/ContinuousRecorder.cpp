@@ -7,7 +7,7 @@ ContinuousRecorder::ContinuousRecorder(std::vector<int16_t>& sharedBuffer, std::
 
 bool ContinuousRecorder::onStart()
 {
-    std::cout << "Recording started\n";
+    std::cout << "ContinuousRecorder running..." << std::endl;
     return true;
 };
 
@@ -27,11 +27,10 @@ bool ContinuousRecorder::onProcessSamples(const int16_t* samples, std::size_t co
     if (rms > SPEECH_THRESHOLD) {
         inSpeech = true;
         silenceTime = 0;
-    }
-    else if (rms < SILENCE_THRESHOLD && inSpeech) {
+    } else if (rms < SILENCE_THRESHOLD && inSpeech) {
         silenceTime += chunkDuration;
 
-        if (silenceTime >= 1.0) {
+        if (silenceTime >= 0.5) {
             inSpeech = false;
 
             {
@@ -46,7 +45,7 @@ bool ContinuousRecorder::onProcessSamples(const int16_t* samples, std::size_t co
 
 void ContinuousRecorder::onStop()
 {
-    std::cout << "Recording stopped\n";
+    std::cout << "ContinuousRecorder stopped." << std::endl;
 };
 
 float ContinuousRecorder::computeRMS(const int16_t* samples, size_t count)

@@ -1,14 +1,17 @@
-#include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
 #include <mutex>
 #include <cmath>
 #include <atomic>
+
+#include <SFML/Audio.hpp>
+
 #include "donat_lib/Globals.hpp"
 
 #pragma once
 
 class ContinuousRecorder : public sf::SoundRecorder {
+
     private:
         std::vector<int16_t>& buffer;
         std::mutex& bufferMutex;
@@ -20,6 +23,8 @@ class ContinuousRecorder : public sf::SoundRecorder {
 
     public:
         std::atomic<bool> readyToTranscribe{false};
+
         ContinuousRecorder(std::vector<int16_t>& sharedBuffer, std::mutex& mtx);
         float computeRMS(const int16_t* samples, size_t count);
+
 };
