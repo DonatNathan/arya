@@ -11,10 +11,6 @@ Arya::Arya() : a_recorder(a_audioBuffer, a_audioMutex), a_recognizer(a_audioBuff
         std::cerr << "Failed to start Arya's  ContinuousRecorder." << std::endl;
         exit(1);
     }
-    
-    while (true) {
-        Update();
-    }
 };
 
 Arya::~Arya()
@@ -22,14 +18,22 @@ Arya::~Arya()
     a_recorder.stop();
 };
 
-void Arya::CheckEvents()
+void Arya::runArya()
+{
+    while (true) {
+        updateLoop();
+    }
+};
+
+void Arya::checkEvents()
 {
 
 };
 
-void Arya::Update()
+void Arya::updateLoop()
 {
     if (!a_lastTranscript.empty()) {
+        std::cout << "[TRANSCRIPT] " << a_lastTranscript << "\n";
         a_lastTranscript.clear();
     }
 };

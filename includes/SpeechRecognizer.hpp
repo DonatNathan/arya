@@ -17,10 +17,13 @@ class SpeechRecognizer {
         std::mutex& a_audioMutex;
         std::string& a_lastTranscript;
         ContinuousRecorder& a_recorder;
+        whisper_context* a_ctx;
 
     public:
         SpeechRecognizer(std::vector<int16_t>& sharedBuffer, std::mutex& mtx, std::string& lastTranscript, ContinuousRecorder& recorder);
         void whisperLoop();
+        std::vector<float> getAudioBuffer();
+        whisper_full_params setupWhisper();
         std::vector<float> resampleTo16k(const std::vector<int16_t>& pcm44100);
 
 };

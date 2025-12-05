@@ -19,7 +19,8 @@ class Arya {
     public:
         Arya();
         ~Arya();
-        void CheckEvents();
-        void Update();
+        void runArya();
+        void checkEvents();
+        void updateLoop();
 
 };

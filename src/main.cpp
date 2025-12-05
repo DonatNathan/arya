@@ -6,6 +6,7 @@ int main(int argc, char **argv)
 
     // MyWindow window("Arya", sf::VideoMode::getDesktopMode());
     Arya arya;
+    arya.runArya();
 
     // window.Init();
 
