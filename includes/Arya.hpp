@@ -3,6 +3,7 @@
 
 #include "ContinuousRecorder.hpp"
 #include "SpeechRecognizer.hpp"
+#include "TranscriptAnalyzer.hpp"
 
 #pragma once
 
@@ -15,6 +16,7 @@ class Arya {
 
         ContinuousRecorder a_recorder;
         SpeechRecognizer a_recognizer;
+        TranscriptAnalyzer a_analyzer;
         
     public:
         Arya();

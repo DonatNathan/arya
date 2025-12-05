@@ -1,0 +1,22 @@
+[
+    {
+        "code": 1,
+        "value": "Correction."
+    },
+    {
+        "code": 2,
+        "value": "Open graphical interface."
+    },
+    {
+        "code": 3,
+        "value": "Close graphical interface."
+    },
+    {
+        "code": 4,
+        "value": "Open your eyes."
+    },
+    {
+        "code": 5,
+        "value": "Close your eyes."
+    }
+]
