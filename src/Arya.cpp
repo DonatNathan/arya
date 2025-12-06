@@ -33,9 +33,13 @@ void Arya::checkEvents()
 void Arya::updateLoop()
 {
     if (!a_lastTranscript.empty()) {
-        std::cout << "[TRANSCRIPT] " << a_lastTranscript << "\n";
+        std::cout << "[ADMIN] " << a_lastTranscript << "\n";
         int code = a_analyzer.findCommand();
         std::cout << "Code: " << code << std::endl;
+        if (code == 0) {
+            std::string response = a_cengine.askLLM(a_lastTranscript);
+            std::cout << "[ARYA]: " << response << std::endl;
+        }
         a_lastTranscript.clear();
     }
 };

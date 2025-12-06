@@ -10,3 +10,7 @@ inline const float FRAME = 1.0 / FRAMERATE_LIMIT;
 
 const float SILENCE_THRESHOLD = 0.001f;
 const float SPEECH_THRESHOLD  = 0.005f;
+
+const int NGL = 99;
+const int N_CTX = 2048;
+const int N_PREDICT = 1000;
