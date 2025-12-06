@@ -25,6 +25,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(nlohmann_json)
 
 add_subdirectory(external/whisper.cpp)
+add_subdirectory(external/llama.cpp)
 
 file(GLOB library_sources "src/*.cpp" "src/donat_lib/*.cpp")
 add_library(GraphicalGameLib ${library_sources})
@@ -36,6 +37,7 @@ target_link_libraries(GraphicalGameLib
     SFML::System
     whisper
     nlohmann_json::nlohmann_json
+    llama
 )
 
 add_executable(Arya src/main.cpp)
@@ -44,6 +46,7 @@ target_link_libraries(Arya
     GraphicalGameLib
     whisper
     nlohmann_json::nlohmann_json
+    llama
 )
 
 set_target_properties(Arya PROPERTIES

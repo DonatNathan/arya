@@ -4,6 +4,7 @@
 #include "ContinuousRecorder.hpp"
 #include "SpeechRecognizer.hpp"
 #include "TranscriptAnalyzer.hpp"
+#include "ConversationEngine.hpp"
 
 #pragma once
 
@@ -17,6 +18,7 @@ class Arya {
         ContinuousRecorder a_recorder;
         SpeechRecognizer a_recognizer;
         TranscriptAnalyzer a_analyzer;
+        ConversationEngine a_cengine;
         
     public:
         Arya();
