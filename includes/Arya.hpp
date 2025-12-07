@@ -4,6 +4,7 @@
 #include "ContinuousRecorder.hpp"
 #include "SpeechRecognizer.hpp"
 #include "TranscriptAnalyzer.hpp"
+#include "IntentEngine.hpp"
 
 #pragma once
 
@@ -17,6 +18,7 @@ class Arya {
         ContinuousRecorder a_recorder;
         SpeechRecognizer a_recognizer;
         TranscriptAnalyzer a_analyzer;
+        IntentEngine a_iengine;
         
     public:
         Arya();
@@ -24,5 +26,6 @@ class Arya {
         void runArya();
         void checkEvents();
         void updateLoop();
+        std::string executeCommand(Intent cmd);
 
 };

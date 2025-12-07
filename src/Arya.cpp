@@ -33,9 +33,34 @@ void Arya::checkEvents()
 void Arya::updateLoop()
 {
     if (!a_lastTranscript.empty()) {
+        std::string response;
         std::cout << "[TRANSCRIPT] " << a_lastTranscript << "\n";
-        int code = a_analyzer.findCommand();
-        std::cout << "Code: " << code << std::endl;
+
+        std::string analyzedTranscript = a_analyzer.analyzeTranscript();
+        Intent command = a_iengine.selectCommand(analyzedTranscript);
+
+        if (command != Intent::NONE)
+            response = executeCommand(command);
+        
+        std::cout << "Response: " << response << std::endl;
         a_lastTranscript.clear();
+    }
+};
+
+std::string Arya::executeCommand(Intent cmd)
+{
+    switch (cmd) {
+        case Intent::CORRECTION_MODE:
+            return "Correction mode enabled.";
+        case Intent::OPEN_INTERFACE:
+            return "Graphical interface opened.";
+        case Intent::CLOSE_INTERFACE:
+            return "Graphical interface closed.";
+        case Intent::CAMERA_ON:
+            return "Camera turned on.";
+        case Intent::CAMERA_OFF:
+            return "Camera turned off.";
+        default:
+            return "Invalid command.";
     }
 };
