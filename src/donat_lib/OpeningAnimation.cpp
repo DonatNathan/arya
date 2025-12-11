@@ -101,3 +101,18 @@ void OpeningAnimation::drawParticles(sf::RenderWindow &window)
         window.draw(circ);
     }
 };
+
+bool OpeningAnimation::isAnimationFinished()
+{
+    float arrivalThreshold = 2.f;
+
+    for (const auto& p : i_particles) {
+        sf::Vector2f diff = p.target - p.position;
+        float distance = std::sqrt(diff.x*diff.x + diff.y*diff.y);
+
+        if (distance > arrivalThreshold)
+            return false;
+    }
+
+    return true;
+};

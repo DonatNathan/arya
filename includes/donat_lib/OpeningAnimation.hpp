@@ -24,5 +24,6 @@ class OpeningAnimation {
         void generateParticlesFromLetterA(sf::RenderWindow &window, unsigned int count = 1000);
         void updateParticles(float dt);
         void drawParticles(sf::RenderWindow &window);
+        bool isAnimationFinished();
 
 };

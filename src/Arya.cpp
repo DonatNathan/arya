@@ -1,6 +1,6 @@
 #include "Arya.hpp"
 
-Arya::Arya() : a_recorder(a_audioBuffer, a_audioMutex), a_recognizer(a_audioBuffer, a_audioMutex, a_lastTranscript, a_recorder), a_analyzer(a_lastTranscript), a_interface("Arya", sf::VideoMode::getDesktopMode())
+Arya::Arya() : a_recorder(a_audioBuffer, a_audioMutex), a_recognizer(a_audioBuffer, a_audioMutex, a_lastTranscript, a_recorder), a_analyzer(a_lastTranscript), a_interface("Arya", sf::VideoMode::getDesktopMode(), a_lastTranscript)
 {
     if (!sf::SoundBufferRecorder::isAvailable()) {
         std::cerr << "No audio input available on your device." << std::endl;

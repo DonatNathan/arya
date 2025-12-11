@@ -14,6 +14,8 @@ class GraphicalInterface {
         sf::RenderWindow i_window;
         sf::VideoMode i_mode;
         sf::Clock i_clock;
+        std::string& a_lastTranscript;
+        bool i_animationDone = false;
 
         std::atomic<bool> i_shouldClose = true;
         std::atomic<bool> i_shouldOpen = true;
@@ -22,7 +24,7 @@ class GraphicalInterface {
         OpeningAnimation i_openingAnimation;
 
     public:
-        GraphicalInterface(std::string name, sf::VideoMode mode);
+        GraphicalInterface(std::string name, sf::VideoMode mode, std::string& lastTranscript);
         ~GraphicalInterface();
         
         void createWindow();

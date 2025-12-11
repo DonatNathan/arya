@@ -1,6 +1,6 @@
 #include "donat_lib/GraphicalInterface.hpp"
 
-GraphicalInterface::GraphicalInterface(std::string name, sf::VideoMode mode)
+GraphicalInterface::GraphicalInterface(std::string name, sf::VideoMode mode, std::string& lastTranscript) : a_lastTranscript(lastTranscript)
 {
     i_name = name;
     i_mode = mode;
@@ -38,8 +38,13 @@ void GraphicalInterface::createWindow()
             checkEvents();
 
             float dt = i_clock.restart().asSeconds();
-            i_openingAnimation.updateParticles(dt);
-            i_openingAnimation.drawParticles(i_window);
+
+            if (!i_animationDone) {
+                i_openingAnimation.updateParticles(dt);
+                i_openingAnimation.drawParticles(i_window);
+                if (i_openingAnimation.isAnimationFinished())
+                    i_animationDone = true;
+            }
 
             update();
             draw();
