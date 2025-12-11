@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.hpp"
 
+#include "donat_lib/OpeningAnimation.hpp"
+
 #pragma once
 
 class GraphicalInterface {
@@ -11,10 +13,13 @@ class GraphicalInterface {
         std::string i_name;
         sf::RenderWindow i_window;
         sf::VideoMode i_mode;
+        sf::Clock i_clock;
 
         std::atomic<bool> i_shouldClose = true;
         std::atomic<bool> i_shouldOpen = true;
         std::atomic<bool> running = true;
+
+        OpeningAnimation i_openingAnimation;
 
     public:
         GraphicalInterface(std::string name, sf::VideoMode mode);

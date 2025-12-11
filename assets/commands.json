@@ -18,5 +18,9 @@
     {
         "code": 5,
         "value": "Close your eyes"
+    },
+    {
+        "code": 6,
+        "value": "Have a good night"
     }
 ]

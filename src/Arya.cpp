@@ -64,6 +64,8 @@ std::string Arya::executeCommand(Intent cmd)
             return "Camera turned on.";
         case Intent::CAMERA_OFF:
             return "Camera turned off.";
+        case Intent::TURN_OFF:
+            exit(0);
         default:
             return "Invalid command.";
     }

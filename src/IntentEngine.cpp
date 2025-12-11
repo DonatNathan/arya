@@ -60,6 +60,8 @@ Intent IntentEngine::selectCommand(std::string analyzedTranscript)
             return Intent::CAMERA_ON;
         case 5:
             return Intent::CAMERA_OFF;
+        case 6:
+            return Intent::TURN_OFF;
         default:
             return Intent::UNKNOWN;
     }

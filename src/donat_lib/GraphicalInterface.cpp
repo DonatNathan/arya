@@ -24,6 +24,8 @@ void GraphicalInterface::createWindow()
         i_window.create(i_mode, i_name, sf::State::Fullscreen);
         i_window.setFramerateLimit(FRAMERATE_LIMIT);
 
+        i_openingAnimation.generateParticlesFromLetterA(i_window);
+
         while (i_window.isOpen()) {
 
             if (i_shouldClose) {
@@ -33,6 +35,11 @@ void GraphicalInterface::createWindow()
 
             clear();
             checkEvents();
+
+            float dt = i_clock.restart().asSeconds();
+            i_openingAnimation.updateParticles(dt);
+            i_openingAnimation.drawParticles(i_window);
+
             update();
             draw();
         }

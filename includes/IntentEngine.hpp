@@ -18,6 +18,7 @@ enum class Intent {
     CLOSE_INTERFACE = 3,
     CAMERA_ON = 4,
     CAMERA_OFF = 5,
+    TURN_OFF = 6,
     UNKNOWN = -1
 };
 
