@@ -25,6 +25,12 @@ void OpeningAnimation::generateParticlesFromLetterA(sf::RenderWindow &window, un
     text.setFillColor(sf::Color::White);
     text.setPosition({0, 0});
 
+    sf::FloatRect bounds = text.getLocalBounds();
+    sf::Vector2f textSize = bounds.size;
+    sf::Vector2f textPosition = bounds.position;
+    text.setOrigin({textPosition.x + textSize.x / 2.f, textPosition.y + textSize.y/ 2.f});
+    text.setPosition({rt.getSize().x / 2.f, rt.getSize().y / 2.f});
+
     rt.draw(text);
     rt.display();
 
@@ -46,17 +52,17 @@ void OpeningAnimation::generateParticlesFromLetterA(sf::RenderWindow &window, un
     for (unsigned i = 0; i < count; i++) {
         sf::Vector2f t = targets[rand() % targets.size()];
 
-
-        
-        // center the letter in the window
         t.x += (window.getSize().x - img.getSize().x) / 2;
         t.y += (window.getSize().y - img.getSize().y) / 2;
 
         Particle p;
         p.target = t;
+        sf::Vector2f center(window.getSize().x / 2.f, window.getSize().y / 2.f);
+        float maxOffset = 150.f;
+
         p.position = {
-            float(rand() % window.getSize().x),
-            float(rand() % window.getSize().y)
+            center.x + ((rand() % 2000) / 1000.f - 1.f) * maxOffset,
+            center.y + ((rand() % 2000) / 1000.f - 1.f) * maxOffset
         };
 
         p.velocity = {0.f, 0.f};
