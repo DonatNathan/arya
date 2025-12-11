@@ -1,6 +1,6 @@
 #include "Arya.hpp"
 
-Arya::Arya() : a_recorder(a_audioBuffer, a_audioMutex), a_recognizer(a_audioBuffer, a_audioMutex, a_lastTranscript, a_recorder), a_analyzer(a_lastTranscript)
+Arya::Arya() : a_recorder(a_audioBuffer, a_audioMutex), a_recognizer(a_audioBuffer, a_audioMutex, a_lastTranscript, a_recorder), a_analyzer(a_lastTranscript), a_interface("Arya", sf::VideoMode::getDesktopMode())
 {
     if (!sf::SoundBufferRecorder::isAvailable()) {
         std::cerr << "No audio input available on your device." << std::endl;
@@ -11,6 +11,8 @@ Arya::Arya() : a_recorder(a_audioBuffer, a_audioMutex), a_recognizer(a_audioBuff
         std::cerr << "Failed to start Arya's  ContinuousRecorder." << std::endl;
         exit(1);
     }
+
+    a_uiThread = std::thread(&GraphicalInterface::createWindow, &a_interface);
 };
 
 Arya::~Arya()
@@ -53,8 +55,10 @@ std::string Arya::executeCommand(Intent cmd)
         case Intent::CORRECTION_MODE:
             return "Correction mode enabled.";
         case Intent::OPEN_INTERFACE:
+            openGraphicalInterface();
             return "Graphical interface opened.";
         case Intent::CLOSE_INTERFACE:
+            closeGraphicalInterface();
             return "Graphical interface closed.";
         case Intent::CAMERA_ON:
             return "Camera turned on.";
@@ -63,4 +67,14 @@ std::string Arya::executeCommand(Intent cmd)
         default:
             return "Invalid command.";
     }
+};
+
+void Arya::openGraphicalInterface()
+{
+    a_interface.open();
+};
+
+void Arya::closeGraphicalInterface()
+{
+    a_interface.close();
 };

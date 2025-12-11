@@ -1,22 +1,22 @@
 [
     {
         "code": 1,
-        "value": "Correction."
+        "value": "Correction"
     },
     {
         "code": 2,
-        "value": "Open graphical interface."
+        "value": "Open graphical interface"
     },
     {
         "code": 3,
-        "value": "Close graphical interface."
+        "value": "Close graphical interface"
     },
     {
         "code": 4,
-        "value": "Open your eyes."
+        "value": "Open your eyes"
     },
     {
         "code": 5,
-        "value": "Close your eyes."
+        "value": "Close your eyes"
     }
 ]
