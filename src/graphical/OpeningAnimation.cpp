@@ -14,7 +14,7 @@ void OpeningAnimation::generateParticlesFromLetterA(sf::RenderWindow &window, un
 {
     sf::Font font;
     if (!font.openFromFile("../assets/arial.ttf"))
-        std::cerr << "Font file 'arial.ttf' not found." << std::endl;
+        std::cerr << getColorFromCode(Color::RED) << "Font file 'arial.ttf' not found." << getColorFromCode(Color::RESET) << std::endl;
 
     sf::RenderTexture rt({200, 200});
     rt.clear(sf::Color(0, 0, 0, 0));

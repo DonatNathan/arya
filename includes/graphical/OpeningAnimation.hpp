@@ -4,6 +4,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+#include "Utils.hpp"
+
 #pragma once
 
 struct Particle {

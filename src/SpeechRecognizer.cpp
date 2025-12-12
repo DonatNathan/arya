@@ -1,13 +1,13 @@
 #include "SpeechRecognizer.hpp"
 
-SpeechRecognizer::SpeechRecognizer(std::vector<int16_t>& sharedBuffer, std::mutex& mtx, std::string& lastTranscript, ContinuousRecorder& recorder, bool isDebugModeEnabled) : a_audioBuffer(sharedBuffer), a_audioMutex(mtx), a_lastTranscript(lastTranscript), a_recorder(recorder)
+SpeechRecognizer::SpeechRecognizer(std::vector<int16_t>& sharedBuffer, std::mutex& mtx, std::mutex& aryaMutex, std::condition_variable& waitForTranscript, std::string& lastTranscript, ContinuousRecorder& recorder, bool isDebugModeEnabled) : a_audioBuffer(sharedBuffer), a_audioMutex(mtx), a_aryaMutex(aryaMutex), a_waitForTranscript(waitForTranscript), a_lastTranscript(lastTranscript), a_recorder(recorder)
 {
     if (!isDebugModeEnabled) {
         std::thread whisperThread(&SpeechRecognizer::whisperLoop, this);
         whisperThread.detach();
     
         if (!std::filesystem::exists("../external/whisper.cpp/models/ggml-base.en.bin")) {
-            std::cerr << "Model not found!\n";
+            std::cerr << getColorFromCode(Color::RED) << "Model not found!" << getColorFromCode(Color::RESET) << std::endl;
             exit(1);
         }
     
@@ -33,7 +33,9 @@ void SpeechRecognizer::whisperLoop()
             const char* txt = whisper_full_get_segment_text(a_ctx, 0);
             
             if (txt && strlen(txt) > 0) {
+                std::lock_guard<std::mutex> lock(a_aryaMutex);
                 a_lastTranscript = txt;
+                a_waitForTranscript.notify_one();
             }
         }
     }

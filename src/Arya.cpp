@@ -1,17 +1,17 @@
 #include "Arya.hpp"
 
-Arya::Arya(bool isDebugModeEnabled) : a_recorder(a_audioBuffer, a_audioMutex), a_recognizer(a_audioBuffer, a_audioMutex, a_lastTranscript, a_recorder, isDebugModeEnabled), a_analyzer(a_lastTranscript), a_interface("Arya", sf::VideoMode::getDesktopMode(), a_lastTranscript)
+Arya::Arya(bool isDebugModeEnabled) : a_recorder(a_audioBuffer, a_audioMutex), a_recognizer(a_audioBuffer, a_audioMutex, a_aryaMutex, a_waitForTranscript, a_lastTranscript, a_recorder, isDebugModeEnabled), a_analyzer(a_lastTranscript), a_interface("Arya", sf::VideoMode::getDesktopMode(), a_lastTranscript)
 {
     a_isDebugModeEnabled = isDebugModeEnabled;
 
     if (!a_isDebugModeEnabled) {
         if (!sf::SoundBufferRecorder::isAvailable()) {
-            std::cerr << "No audio input available on your device." << std::endl;
+            std::cerr << getColorFromCode(Color::RED) << "No audio input available on your device." << getColorFromCode(Color::RESET) << std::endl;
             exit(1);
         }
     
         if (!a_recorder.start(44100)) {
-            std::cerr << "Failed to start Arya's  ContinuousRecorder." << std::endl;
+            std::cerr << getColorFromCode(Color::RED) << "Failed to start Arya's  ContinuousRecorder." << getColorFromCode(Color::RESET) << std::endl;
             exit(1);
         }
     }
@@ -29,10 +29,16 @@ void Arya::runArya()
     while (true) {
         if (a_isDebugModeEnabled) {
             std::string adminInput;
-            std::cout << "ADMIN> ";
+            std::cout << getColorFromCode(Color::YELLOW) << "ADMIN> " << getColorFromCode(Color::RESET);
             std::getline(std::cin, adminInput);
-            a_lastTranscript = adminInput;
+            {
+                std::lock_guard<std::mutex> lock(a_aryaMutex);
+                a_lastTranscript = adminInput;
+            }
+            a_waitForTranscript.notify_one();
         }
+        std::unique_lock<std::mutex> lock(a_aryaMutex);
+        a_waitForTranscript.wait(lock, [&]{ return !a_lastTranscript.empty(); });
         updateLoop();
     }
 };

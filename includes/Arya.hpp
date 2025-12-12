@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <condition_variable>
+
+#include "Utils.hpp"
 
 #include "graphical/GraphicalInterface.hpp"
 
@@ -17,6 +20,8 @@ class Arya {
         std::mutex a_audioMutex;
         std::string a_lastTranscript;
         bool a_isDebugModeEnabled;
+        std::mutex a_aryaMutex;
+        std::condition_variable a_waitForTranscript;
 
         std::thread a_uiThread;
         GraphicalInterface a_interface;

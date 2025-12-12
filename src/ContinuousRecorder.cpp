@@ -7,7 +7,7 @@ ContinuousRecorder::ContinuousRecorder(std::vector<int16_t>& sharedBuffer, std::
 
 bool ContinuousRecorder::onStart()
 {
-    std::cout << "ContinuousRecorder running..." << std::endl;
+    std::cout << getColorFromCode(Color::GREEN) << "ContinuousRecorder running..." << getColorFromCode(Color::RESET) << std::endl;
     return true;
 };
 
@@ -45,7 +45,7 @@ bool ContinuousRecorder::onProcessSamples(const int16_t* samples, std::size_t co
 
 void ContinuousRecorder::onStop()
 {
-    std::cout << "ContinuousRecorder stopped." << std::endl;
+    std::cout << getColorFromCode(Color::GREEN) << "ContinuousRecorder stopped." << getColorFromCode(Color::RESET) << std::endl;
 };
 
 float ContinuousRecorder::computeRMS(const int16_t* samples, size_t count)

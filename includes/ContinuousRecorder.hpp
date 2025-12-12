@@ -7,6 +7,7 @@
 #include <SFML/Audio.hpp>
 
 #include "Globals.hpp"
+#include "Utils.hpp"
 
 #pragma once
 
