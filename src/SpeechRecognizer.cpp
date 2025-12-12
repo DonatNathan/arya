@@ -18,8 +18,9 @@ SpeechRecognizer::SpeechRecognizer(std::vector<int16_t>& sharedBuffer, std::mute
 void SpeechRecognizer::whisperLoop()
 {
     while (true) {
-        if (!a_recorder.readyToTranscribe)
-            continue;
+
+        std::unique_lock<std::mutex> lock2(a_recorder.a_recognizerMutex);
+        a_recorder.a_waitForReady.wait(lock2, [&]{ return (bool)a_recorder.readyToTranscribe; });
 
         a_recorder.readyToTranscribe = false;
 

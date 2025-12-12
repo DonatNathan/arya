@@ -20,6 +20,7 @@ class Arya {
         std::mutex a_audioMutex;
         std::string a_lastTranscript;
         bool a_isDebugModeEnabled;
+
         std::mutex a_aryaMutex;
         std::condition_variable a_waitForTranscript;
 

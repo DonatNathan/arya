@@ -35,8 +35,10 @@ bool ContinuousRecorder::onProcessSamples(const int16_t* samples, std::size_t co
 
             {
                 std::lock_guard<std::mutex> lock(bufferMutex);
+                std::lock_guard<std::mutex> lock2(a_recognizerMutex);
                 readyToTranscribe = true;
             }
+            a_waitForReady.notify_one();
         }
     }
 

@@ -3,6 +3,7 @@
 #include <mutex>
 #include <cmath>
 #include <atomic>
+#include <condition_variable>
 
 #include <SFML/Audio.hpp>
 
@@ -24,6 +25,9 @@ class ContinuousRecorder : public sf::SoundRecorder {
 
     public:
         std::atomic<bool> readyToTranscribe{false};
+
+        std::mutex a_recognizerMutex;
+        std::condition_variable a_waitForReady;
 
         ContinuousRecorder(std::vector<int16_t>& sharedBuffer, std::mutex& mtx);
         float computeRMS(const int16_t* samples, size_t count);

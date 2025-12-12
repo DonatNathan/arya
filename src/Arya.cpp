@@ -50,20 +50,18 @@ void Arya::checkEvents()
 
 void Arya::updateLoop()
 {
-    if (!a_lastTranscript.empty()) {
-        std::string response;
-        std::cout << "[TRANSCRIPT] " << a_lastTranscript << "\n";
+    std::string response;
+    std::cout << "[TRANSCRIPT] " << a_lastTranscript << "\n";
 
-        std::string analyzedTranscript = a_analyzer.analyzeTranscript();
+    std::string analyzedTranscript = a_analyzer.analyzeTranscript();
 
-        Intent command = a_iengine.selectCommand(analyzedTranscript);
+    Intent command = a_iengine.selectCommand(analyzedTranscript);
 
-        if (command != Intent::NONE)
-            response = executeCommand(command);
-        
-        std::cout << "Response: " << response << std::endl;
-        a_lastTranscript.clear();
-    }
+    if (command != Intent::NONE)
+        response = executeCommand(command);
+
+    std::cout << "Response: " << response << std::endl;
+    a_lastTranscript.clear();
 };
 
 std::string Arya::executeCommand(Intent cmd)
