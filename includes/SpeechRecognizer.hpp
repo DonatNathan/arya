@@ -20,7 +20,7 @@ class SpeechRecognizer {
         whisper_context* a_ctx;
 
     public:
-        SpeechRecognizer(std::vector<int16_t>& sharedBuffer, std::mutex& mtx, std::string& lastTranscript, ContinuousRecorder& recorder);
+        SpeechRecognizer(std::vector<int16_t>& sharedBuffer, std::mutex& mtx, std::string& lastTranscript, ContinuousRecorder& recorder, bool isDebugModeEnabled);
         void whisperLoop();
         std::vector<float> getAudioBuffer();
         whisper_full_params setupWhisper();

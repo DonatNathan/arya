@@ -26,7 +26,7 @@ FetchContent_MakeAvailable(nlohmann_json)
 
 add_subdirectory(external/whisper.cpp)
 
-file(GLOB library_sources "src/*.cpp" "src/donat_lib/*.cpp")
+file(GLOB library_sources "src/*.cpp" "src/graphical/*.cpp")
 add_library(GraphicalGameLib ${library_sources})
 target_include_directories(GraphicalGameLib PUBLIC includes)
 target_link_libraries(GraphicalGameLib

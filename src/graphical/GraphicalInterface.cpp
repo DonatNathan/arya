@@ -1,4 +1,4 @@
-#include "donat_lib/GraphicalInterface.hpp"
+#include "graphical/GraphicalInterface.hpp"
 
 GraphicalInterface::GraphicalInterface(std::string name, sf::VideoMode mode, std::string& lastTranscript) : a_lastTranscript(lastTranscript)
 {
@@ -52,6 +52,7 @@ void GraphicalInterface::createWindow()
 
         i_shouldOpen = false;
         i_shouldClose = false;
+        i_animationDone = false;
     }
 };
 

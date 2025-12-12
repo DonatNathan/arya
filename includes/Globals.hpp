@@ -10,3 +10,13 @@ inline const float FRAME = 1.0 / FRAMERATE_LIMIT;
 
 const float SILENCE_THRESHOLD = 0.001f;
 const float SPEECH_THRESHOLD  = 0.005f;
+
+// Colors
+
+enum class Color {
+    RESET = 0,
+    RED = 31,
+    GREEN = 33,
+    YELLOW = 33,
+    BLUE = 34
+};

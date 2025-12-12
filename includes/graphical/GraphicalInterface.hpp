@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Globals.hpp"
 
-#include "donat_lib/OpeningAnimation.hpp"
+#include "graphical/OpeningAnimation.hpp"
 
 #pragma once
 

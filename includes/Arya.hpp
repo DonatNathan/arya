@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include "donat_lib/GraphicalInterface.hpp"
+#include "graphical/GraphicalInterface.hpp"
 
 #include "ContinuousRecorder.hpp"
 #include "SpeechRecognizer.hpp"
@@ -16,6 +16,7 @@ class Arya {
         std::vector<int16_t> a_audioBuffer;
         std::mutex a_audioMutex;
         std::string a_lastTranscript;
+        bool a_isDebugModeEnabled;
 
         std::thread a_uiThread;
         GraphicalInterface a_interface;
@@ -26,11 +27,8 @@ class Arya {
         IntentEngine a_iengine;
 
     public:
-        Arya();
+        Arya(bool isDebugModeEnabled);
         ~Arya();
-
-        void openGraphicalInterface();
-        void closeGraphicalInterface();
 
         void runArya();
         void checkEvents();

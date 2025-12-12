@@ -1,4 +1,4 @@
-#include "donat_lib/OpeningAnimation.hpp"
+#include "graphical/OpeningAnimation.hpp"
 
 OpeningAnimation::OpeningAnimation()
 {

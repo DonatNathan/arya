@@ -1,15 +1,19 @@
 #include "Arya.hpp"
 
-Arya::Arya() : a_recorder(a_audioBuffer, a_audioMutex), a_recognizer(a_audioBuffer, a_audioMutex, a_lastTranscript, a_recorder), a_analyzer(a_lastTranscript), a_interface("Arya", sf::VideoMode::getDesktopMode(), a_lastTranscript)
+Arya::Arya(bool isDebugModeEnabled) : a_recorder(a_audioBuffer, a_audioMutex), a_recognizer(a_audioBuffer, a_audioMutex, a_lastTranscript, a_recorder, isDebugModeEnabled), a_analyzer(a_lastTranscript), a_interface("Arya", sf::VideoMode::getDesktopMode(), a_lastTranscript)
 {
-    if (!sf::SoundBufferRecorder::isAvailable()) {
-        std::cerr << "No audio input available on your device." << std::endl;
-        exit(1);
-    }
+    a_isDebugModeEnabled = isDebugModeEnabled;
 
-    if (!a_recorder.start(44100)) {
-        std::cerr << "Failed to start Arya's  ContinuousRecorder." << std::endl;
-        exit(1);
+    if (!a_isDebugModeEnabled) {
+        if (!sf::SoundBufferRecorder::isAvailable()) {
+            std::cerr << "No audio input available on your device." << std::endl;
+            exit(1);
+        }
+    
+        if (!a_recorder.start(44100)) {
+            std::cerr << "Failed to start Arya's  ContinuousRecorder." << std::endl;
+            exit(1);
+        }
     }
 
     a_uiThread = std::thread(&GraphicalInterface::createWindow, &a_interface);
@@ -23,6 +27,12 @@ Arya::~Arya()
 void Arya::runArya()
 {
     while (true) {
+        if (a_isDebugModeEnabled) {
+            std::string adminInput;
+            std::cout << "ADMIN> ";
+            std::getline(std::cin, adminInput);
+            a_lastTranscript = adminInput;
+        }
         updateLoop();
     }
 };
@@ -39,6 +49,7 @@ void Arya::updateLoop()
         std::cout << "[TRANSCRIPT] " << a_lastTranscript << "\n";
 
         std::string analyzedTranscript = a_analyzer.analyzeTranscript();
+
         Intent command = a_iengine.selectCommand(analyzedTranscript);
 
         if (command != Intent::NONE)
@@ -55,10 +66,10 @@ std::string Arya::executeCommand(Intent cmd)
         case Intent::CORRECTION_MODE:
             return "Correction mode enabled.";
         case Intent::OPEN_INTERFACE:
-            openGraphicalInterface();
+            a_interface.open();
             return "Graphical interface opened.";
         case Intent::CLOSE_INTERFACE:
-            closeGraphicalInterface();
+            a_interface.close();
             return "Graphical interface closed.";
         case Intent::CAMERA_ON:
             return "Camera turned on.";
@@ -69,14 +80,4 @@ std::string Arya::executeCommand(Intent cmd)
         default:
             return "Invalid command.";
     }
-};
-
-void Arya::openGraphicalInterface()
-{
-    a_interface.open();
-};
-
-void Arya::closeGraphicalInterface()
-{
-    a_interface.close();
 };

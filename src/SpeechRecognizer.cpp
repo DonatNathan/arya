@@ -1,16 +1,18 @@
 #include "SpeechRecognizer.hpp"
 
-SpeechRecognizer::SpeechRecognizer(std::vector<int16_t>& sharedBuffer, std::mutex& mtx, std::string& lastTranscript, ContinuousRecorder& recorder) : a_audioBuffer(sharedBuffer), a_audioMutex(mtx), a_lastTranscript(lastTranscript), a_recorder(recorder)
+SpeechRecognizer::SpeechRecognizer(std::vector<int16_t>& sharedBuffer, std::mutex& mtx, std::string& lastTranscript, ContinuousRecorder& recorder, bool isDebugModeEnabled) : a_audioBuffer(sharedBuffer), a_audioMutex(mtx), a_lastTranscript(lastTranscript), a_recorder(recorder)
 {
-    std::thread whisperThread(&SpeechRecognizer::whisperLoop, this);
-    whisperThread.detach();
-
-    if (!std::filesystem::exists("../external/whisper.cpp/models/ggml-base.en.bin")) {
-        std::cerr << "Model not found!\n";
-        exit(1);
+    if (!isDebugModeEnabled) {
+        std::thread whisperThread(&SpeechRecognizer::whisperLoop, this);
+        whisperThread.detach();
+    
+        if (!std::filesystem::exists("../external/whisper.cpp/models/ggml-base.en.bin")) {
+            std::cerr << "Model not found!\n";
+            exit(1);
+        }
+    
+        a_ctx = whisper_init_from_file_with_params("../external/whisper.cpp/models/ggml-base.en.bin", {});
     }
-
-    a_ctx = whisper_init_from_file_with_params("../external/whisper.cpp/models/ggml-base.en.bin", {});
 };
 
 void SpeechRecognizer::whisperLoop()

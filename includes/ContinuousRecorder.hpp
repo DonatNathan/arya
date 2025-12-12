@@ -6,7 +6,7 @@
 
 #include <SFML/Audio.hpp>
 
-#include "donat_lib/Globals.hpp"
+#include "Globals.hpp"
 
 #pragma once
 
