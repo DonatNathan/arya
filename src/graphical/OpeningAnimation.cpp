@@ -66,7 +66,7 @@ void OpeningAnimation::generateParticlesFromLetterA(sf::RenderWindow &window, un
         };
 
         p.velocity = {0.f, 0.f};
-        p.color = sf::Color(0, 200, 255);
+        p.color = sf::Color(MAIN_COLOR);
 
         i_particles.push_back(p);
     }

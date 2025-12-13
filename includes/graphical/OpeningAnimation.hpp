@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Utils.hpp"
+#include "Globals.hpp"
 
 #pragma once
 
@@ -23,7 +24,7 @@ class OpeningAnimation {
         OpeningAnimation();
         ~OpeningAnimation();
 
-        void generateParticlesFromLetterA(sf::RenderWindow &window, unsigned int count = 1000);
+        void generateParticlesFromLetterA(sf::RenderWindow &window, unsigned int count = PARTICLES_COUNT);
         void updateParticles(float dt);
         void drawParticles(sf::RenderWindow &window);
         bool isAnimationFinished();

@@ -5,6 +5,7 @@
 #include "Globals.hpp"
 
 #include "graphical/OpeningAnimation.hpp"
+#include "graphical/ViewInterface.hpp"
 
 #pragma once
 
@@ -22,6 +23,11 @@ class GraphicalInterface {
         std::atomic<bool> running = true;
 
         OpeningAnimation i_openingAnimation;
+
+        ViewInterface i_mainView;
+        ViewInterface i_cameraView;
+        ViewInterface i_terminalView;
+        bool i_areViewsCreated;
 
     public:
         GraphicalInterface(std::string name, sf::VideoMode mode, std::string& lastTranscript);
