@@ -24,12 +24,15 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
+find_package(OpenCV REQUIRED)
+
 add_subdirectory(external/whisper.cpp)
 
 file(GLOB library_sources "src/*.cpp" "src/graphical/*.cpp")
 add_library(GraphicalGameLib ${library_sources})
 target_include_directories(GraphicalGameLib PUBLIC includes)
 target_link_libraries(GraphicalGameLib
+    ${OpenCV_LIBS}
     SFML::Audio
     SFML::Graphics
     SFML::Window
@@ -41,6 +44,7 @@ target_link_libraries(GraphicalGameLib
 add_executable(Arya src/main.cpp)
 target_include_directories(Arya PRIVATE includes)
 target_link_libraries(Arya
+    ${OpenCV_LIBS}
     GraphicalGameLib
     whisper
     nlohmann_json::nlohmann_json

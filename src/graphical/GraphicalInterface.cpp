@@ -53,10 +53,14 @@ void GraphicalInterface::createWindow()
                     i_cameraView.createView({(float)size.x * 0.5f, (float)size.y * 0.5f}, {{0.5f, 0.f}, {0.5f, 0.5f}}, {(float)size.x * 0.75f, (float)size.y * 0.25f}, size);
                     i_terminalView.createView({(float)size.x * 0.5f, (float)size.y * 0.5f}, {{0.5f, 0.5f}, {0.5f, 0.5f}}, {(float)size.x * 0.75f, (float)size.y * 0.75f}, size);
 
+                    i_cameraGetter.start(0);
+
                     i_areViewsCreated = true;
                 }
 
                 i_window.setView(i_cameraView.i_view);
+                i_cameraGetter.update();
+                i_cameraGetter.draw(i_window);
                 i_cameraView.drawView(i_window);
 
                 i_window.setView(i_mainView.i_view);
