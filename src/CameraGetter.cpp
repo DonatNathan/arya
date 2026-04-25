@@ -21,6 +21,10 @@ bool CameraGetter::start(int device)
         return false;
     }
 
+    if (!faceCascade.load("../external/opencv/haarcascade_frontalface_default.xml")) {
+        std::cerr << "Failed to load face cascade\n";
+    }
+
     i_cap.set(cv::CAP_PROP_FPS, 30);
 
     i_running = true;
@@ -45,20 +49,38 @@ void CameraGetter::update()
     if (!i_running)
         return;
 
-    i_cap >> i_frame;
-    if (i_frame.empty())
+    i_cap >> i_bgr_frame;
+    if (i_bgr_frame.empty())
         return;
 
-    cv::cvtColor(i_frame, i_frame, cv::COLOR_BGR2RGBA);
+    cv::Mat gray;
+    cv::cvtColor(i_bgr_frame, gray, cv::COLOR_BGR2GRAY);
+    cv::equalizeHist(gray, gray);
 
-    if (i_texture.getSize().x != i_frame.cols ||
-        i_texture.getSize().y != i_frame.rows)
+    std::vector<cv::Rect> faces;
+    faceCascade.detectMultiScale(
+        gray,
+        faces,
+        1.1,
+        3,
+        0,
+        cv::Size(30, 30)
+    );
+
+    for (const auto& face : faces) {
+        cv::rectangle(i_bgr_frame, face, cv::Scalar(0, 255, 0), 2);
+    }
+
+    cv::cvtColor(i_bgr_frame, i_rgba_frame, cv::COLOR_BGR2RGBA);
+
+    if (i_texture.getSize().x != i_rgba_frame.cols ||
+        i_texture.getSize().y != i_rgba_frame.rows)
     {
-        i_texture = sf::Texture({(unsigned int)i_frame.cols, (unsigned int)i_frame.rows});
+        i_texture = sf::Texture({(unsigned int)i_rgba_frame.cols, (unsigned int)i_rgba_frame.rows});
         i_sprite.setTexture(i_texture, true);
     }
 
-    i_texture.update(i_frame.ptr());
+    i_texture.update(i_rgba_frame.ptr());
 }
 
 void CameraGetter::draw(sf::RenderWindow& window)
