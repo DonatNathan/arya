@@ -21,8 +21,13 @@ bool CameraGetter::start(int device)
         return false;
     }
 
-    if (!faceCascade.load("../external/opencv/haarcascade_frontalface_default.xml")) {
-        std::cerr << "Failed to load face cascade\n";
+    faceNet = cv::dnn::readNetFromCaffe(
+        "../external/opencv/deploy.prototxt",
+        "../external/opencv/res10_300x300_ssd_iter_140000.caffemodel"
+    );
+
+    if (faceNet.empty()) {
+        std::cerr << "Failed to load DNN face model\n";
     }
 
     i_cap.set(cv::CAP_PROP_FPS, 30);
@@ -57,20 +62,35 @@ void CameraGetter::update()
     cv::cvtColor(i_bgr_frame, gray, cv::COLOR_BGR2GRAY);
     cv::equalizeHist(gray, gray);
 
-    std::vector<cv::Rect> faces;
-    faceCascade.detectMultiScale(
-        gray,
-        faces,
-        1.1,
-        3,
-        0,
-        cv::Size(30, 30)
+    cv::Mat blob = cv::dnn::blobFromImage(
+        i_bgr_frame,
+        1.0,
+        cv::Size(300, 300),
+        cv::Scalar(104, 177, 123),
+        false,
+        false
     );
 
-    for (const auto& face : faces) {
-        cv::rectangle(i_bgr_frame, face, cv::Scalar(0, 255, 0), 2);
-    }
+    faceNet.setInput(blob);
+    cv::Mat detections = faceNet.forward();
 
+    float confidenceThreshold = 0.5;
+
+    cv::Mat detectionMat(detections.size[2], detections.size[3], CV_32F, detections.ptr<float>());
+
+    for (int i = 0; i < detectionMat.rows; i++) {
+        float confidence = detectionMat.at<float>(i, 2);
+
+        if (confidence > 0.5f) {
+            int x1 = detectionMat.at<float>(i, 3) * i_bgr_frame.cols;
+            int y1 = detectionMat.at<float>(i, 4) * i_bgr_frame.rows;
+            int x2 = detectionMat.at<float>(i, 5) * i_bgr_frame.cols;
+            int y2 = detectionMat.at<float>(i, 6) * i_bgr_frame.rows;
+
+            cv::rectangle(i_bgr_frame, cv::Rect(cv::Point(x1, y1), cv::Point(x2, y2)),
+                        cv::Scalar(0, 255, 0), 2);
+        }
+    }
     cv::cvtColor(i_bgr_frame, i_rgba_frame, cv::COLOR_BGR2RGBA);
 
     if (i_texture.getSize().x != i_rgba_frame.cols ||

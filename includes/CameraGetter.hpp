@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <opencv2/opencv.hpp>
-#include <opencv2/objdetect.hpp>
+#include <opencv2/dnn.hpp>
 
 #include "Globals.hpp"
 #include "Utils.hpp"
@@ -13,7 +13,7 @@ class CameraGetter {
         cv::Mat i_bgr_frame;
         cv::Mat i_rgba_frame;
 
-        cv::CascadeClassifier faceCascade;
+        cv::dnn::Net faceNet;
 
         sf::Image i_image;
         sf::Texture i_texture;
