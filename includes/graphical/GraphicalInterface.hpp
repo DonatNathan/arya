@@ -42,4 +42,7 @@ class GraphicalInterface {
         void checkEvents();
         void draw();
         void update();
+
+        void startCamera();
+        void stopCamera();
 };

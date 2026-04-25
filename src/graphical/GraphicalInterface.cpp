@@ -117,3 +117,13 @@ void GraphicalInterface::close()
 {
     i_shouldClose = true;
 };
+
+void GraphicalInterface::startCamera()
+{
+    i_cameraGetter.start();
+};
+
+void GraphicalInterface::stopCamera()
+{
+    i_cameraGetter.stop();
+};
