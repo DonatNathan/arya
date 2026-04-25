@@ -26,7 +26,7 @@ void GraphicalInterface::createWindow()
         i_window.setFramerateLimit(FRAMERATE_LIMIT);
         i_window.setMouseCursorVisible(false);
 
-        i_openingAnimation.generateParticlesFromLetterA(i_window);
+        // i_openingAnimation.generateParticlesFromLetterA(i_window);
 
         while (i_window.isOpen()) {
 

@@ -1,6 +1,9 @@
 #include <SFML/Graphics.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/dnn.hpp>
+#include <numeric>
+#include <ctime>
+#include <string>
 
 #include "Globals.hpp"
 #include "Utils.hpp"
@@ -14,6 +17,9 @@ class CameraGetter {
         cv::Mat i_rgba_frame;
 
         cv::dnn::Net faceNet;
+        cv::dnn::Net embedder;
+
+        std::vector<cv::Mat> myEmbeddings;
 
         sf::Image i_image;
         sf::Texture i_texture;
@@ -32,4 +38,5 @@ class CameraGetter {
         void draw(sf::RenderWindow& window);
 
         bool isRunning() const;
+        void loadMyFaceDataset(const std::string& folderPath);
 };
