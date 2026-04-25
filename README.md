@@ -5,8 +5,22 @@ Arya, my own virtual assistant. And more than it.
 ## Install dependencies
 
 ```
-sudo snap install --classic code
 sudo apt install git cmake build-essential libopencv-dev libx11-dev libxrandr-dev libxcursor-dev libxi-dev libopengl-dev libgl1-mesa-dev libudev-dev libfreetype6-dev libvorbis-dev libogg-dev libflac-dev
+```
+
+## Setup code environment
+
+```
+sudo snap install --classic code
+```
+
+In the .vscode/c_cpp_properties.json:
+```
+"includePath": [
+    "${workspaceFolder}/**",
+    "${workspaceFolder}/includes",
+    "${workspaceFolder}/build/_deps/sfml-src/include"
+],
 ```
 
 ## Clone

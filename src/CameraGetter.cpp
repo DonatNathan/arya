@@ -49,26 +49,16 @@ void CameraGetter::update()
     if (i_frame.empty())
         return;
 
-    // Convert BGR → RGBA
     cv::cvtColor(i_frame, i_frame, cv::COLOR_BGR2RGBA);
 
     if (i_texture.getSize().x != i_frame.cols ||
         i_texture.getSize().y != i_frame.rows)
     {
-        i_image.resize({(unsigned)i_frame.cols, (unsigned)i_frame.rows});
-        if (!i_texture.loadFromImage(i_image))
-            std::cerr << getColorFromCode(Color::RED) << "Failed to load texture from image." << getColorFromCode(Color::RESET) << std::endl;
+        i_texture = sf::Texture({(unsigned int)i_frame.cols, (unsigned int)i_frame.rows});
         i_sprite.setTexture(i_texture, true);
     }
 
-    // std::memcpy(
-    //     i_image.getPixelsPtr(),
-    //     i_frame.ptr(),
-    //     i_frame.total() * 4
-    // );
-
-    if (!i_texture.loadFromImage(i_image))
-        std::cerr << getColorFromCode(Color::RED) << "Failed to load texture from image." << getColorFromCode(Color::RESET) << std::endl;
+    i_texture.update(i_frame.ptr());
 }
 
 void CameraGetter::draw(sf::RenderWindow& window)
