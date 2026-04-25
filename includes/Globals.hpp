@@ -28,3 +28,7 @@ inline float PARTICLES_COUNT = 1000;
 
 inline sf::Color MAIN_COLOR = {255, 59, 59};
 inline sf::Color BACKGROUND_COLOR = {10, 15, 24};
+inline sf::Color EYES_WHITE = {255, 255, 255};
+inline sf::Color EYES_YELLOW = {255, 255, 0};
+inline sf::Color EYES_BLUE = {0, 0, 255};
+inline sf::Color EYES_RED = {255, 0, 0};

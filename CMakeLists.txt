@@ -28,7 +28,7 @@ find_package(OpenCV REQUIRED)
 
 add_subdirectory(external/whisper.cpp)
 
-file(GLOB library_sources "src/*.cpp" "src/graphical/*.cpp")
+file(GLOB_RECURSE library_sources "src/*.cpp")
 
 add_executable(Arya src/main.cpp ${library_sources})
 target_include_directories(Arya PRIVATE includes)

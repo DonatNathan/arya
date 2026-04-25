@@ -7,6 +7,7 @@
 
 #include "Globals.hpp"
 #include "Utils.hpp"
+#include "modules/eyes/FaceCornerBracket.hpp"
 
 #pragma once
 
@@ -26,6 +27,7 @@ class CameraGetter {
         sf::Sprite i_sprite;
 
         bool i_running = false;
+        int i_tick = 0;
 
     public:
         CameraGetter();

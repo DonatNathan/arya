@@ -146,21 +146,10 @@ void CameraGetter::update()
 
         // std::cout << "Dist(" << i << "): " << avgDist << std::endl;
 
-        cv::Scalar color = isMe ?
-            cv::Scalar(0, 255, 0) :
-            cv::Scalar(0, 0, 255);
+        FaceCornerBracket bracket(isMe, i_bgr_frame, faceRect);
+        bracket.cvDisplay(i_tick);
 
-        cv::rectangle(i_bgr_frame, faceRect, color, 2);
-
-        cv::putText(
-            i_bgr_frame,
-            isMe ? "YOU" : "OTHER",
-            cv::Point(x1, y1 - 10),
-            cv::FONT_HERSHEY_SIMPLEX,
-            0.6,
-            color,
-            2
-        );
+        i_tick++;
     }
     cv::cvtColor(i_bgr_frame, i_rgba_frame, cv::COLOR_BGR2RGBA);
 
