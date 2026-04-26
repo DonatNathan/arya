@@ -11,8 +11,11 @@ class FaceCornerBracket {
         cv::Rect& i_rect;
         std::string i_label;
         cv::Scalar i_color;
-        int i_thickness = 2;
-        int i_cornerLen = 20;
+        int i_cornerThickness = 3;
+        int i_dotThickness = 2;
+        int i_dotLen = 10;
+        int i_crossLen = 5;
+        int i_gapLen = 10;
 
     public:
 
@@ -23,6 +26,7 @@ class FaceCornerBracket {
         void setColor();
 
         void drawCornerRect();
+        void drawDottedEdges();
         void drawScanEffect(int tick);
         void drawOverlay();
         void draw(int tick);

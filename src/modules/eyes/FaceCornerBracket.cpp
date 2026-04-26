@@ -35,48 +35,61 @@ void FaceCornerBracket::drawCornerRect()
     int w = i_rect.width, h = i_rect.height;
 
     // Top-left
-    cv::line(i_frame, {x, y},           {x + i_cornerLen, y},           i_color, i_thickness);
-    cv::line(i_frame, {x, y},           {x, y + i_cornerLen},           i_color, i_thickness);
+    cv::line(i_frame, {x, y},           {x + i_dotLen, y},           i_color, i_cornerThickness);
+    cv::line(i_frame, {x, y},           {x, y + i_dotLen},           i_color, i_cornerThickness);
 
     // Top-right
-    cv::line(i_frame, {x + w, y},       {x + w - i_cornerLen, y},       i_color, i_thickness);
-    cv::line(i_frame, {x + w, y},       {x + w, y + i_cornerLen},       i_color, i_thickness);
+    cv::line(i_frame, {x + w, y},       {x + w - i_dotLen, y},       i_color, i_cornerThickness);
+    cv::line(i_frame, {x + w, y},       {x + w, y + i_dotLen},       i_color, i_cornerThickness);
 
     // Bottom-left
-    cv::line(i_frame, {x, y + h},       {x + i_cornerLen, y + h},       i_color, i_thickness);
-    cv::line(i_frame, {x, y + h},       {x, y + h - i_cornerLen},       i_color, i_thickness);
+    cv::line(i_frame, {x, y + h},       {x + i_dotLen, y + h},       i_color, i_cornerThickness);
+    cv::line(i_frame, {x, y + h},       {x, y + h - i_dotLen},       i_color, i_cornerThickness);
 
     // Bottom-right
-    cv::line(i_frame, {x + w, y + h},   {x + w - i_cornerLen, y + h},   i_color, i_thickness);
-    cv::line(i_frame, {x + w, y + h},   {x + w, y + h - i_cornerLen},   i_color, i_thickness);
+    cv::line(i_frame, {x + w, y + h},   {x + w - i_dotLen, y + h},   i_color, i_cornerThickness);
+    cv::line(i_frame, {x + w, y + h},   {x + w, y + h - i_dotLen},   i_color, i_cornerThickness);
 };
 
-void FaceCornerBracket::drawScanEffect(int tick)
+void FaceCornerBracket::drawDottedEdges()
 {
-    int period = i_rect.height * 2;
-    int t = tick % period;
-    int scanY = (t < i_rect.height) ? i_rect.y + t : i_rect.y + period - t;
+    int x = i_rect.x, y = i_rect.y;
+    int w = i_rect.width, h = i_rect.height;
+    int cx = x + w / 2, cy = y + h / 2;
 
-    cv::line(i_frame,
-        {i_rect.x, scanY},
-        {i_rect.x + i_rect.width, scanY},
-        i_color * 0.5,
-        1
-    );
-};
+    int skip = i_dotLen + i_gapLen;
 
-void FaceCornerBracket::drawOverlay()
-{
-    cv::Mat overlay = i_frame.clone();
-    cv::rectangle(overlay, i_rect, i_color, cv::FILLED);
-    cv::addWeighted(overlay, 0.08, i_frame, 0.92, 0, i_frame);
+    // Horizontal edges (top & bottom)
+    for (int edge = 0; edge < 2; edge++) {
+        int ey = (edge == 0) ? y : y + h;
+        int dir = (edge == 0) ? 1 : -1;
+
+        for (int dx = x + skip; dx < x + w - skip; dx += i_dotLen + i_gapLen) {
+            int ex = std::min(dx + i_dotLen, x + w - skip);
+            cv::line(i_frame, {dx, ey}, {ex, ey}, i_color, i_dotThickness);
+        }
+
+        cv::line(i_frame, {cx, ey}, {cx, ey + i_crossLen * 2 * dir}, i_color, i_dotThickness);
+    }
+
+    // Vertical edges (left & right)
+    for (int edge = 0; edge < 2; edge++) {
+        int ex = (edge == 0) ? x : x + w;
+        int dir = (edge == 0) ? 1 : -1;
+
+        for (int dy = y + skip; dy < y + h - skip; dy += i_dotLen + i_gapLen) {
+            int ey = std::min(dy + i_dotLen, y + h - skip);
+            cv::line(i_frame, {ex, dy}, {ex, ey}, i_color, i_dotThickness);
+        }
+
+        cv::line(i_frame, {ex, cy}, {ex + i_crossLen * 2 * dir, cy}, i_color, i_dotThickness);
+    }
 };
 
 void FaceCornerBracket::draw(int tick)
 {
-    this->drawOverlay();
     this->drawCornerRect();
-    this->drawScanEffect(tick);
+    this->drawDottedEdges();
 };
 
 void FaceCornerBracket::cvDisplay(int tick)
