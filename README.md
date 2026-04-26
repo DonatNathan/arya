@@ -1,6 +1,6 @@
 # Arya
 
-Arya, my own virtual assistant. And more than it.
+Arya, my own virtual assistant. And more than it. Yes.
 
 ## Install dependencies
 
