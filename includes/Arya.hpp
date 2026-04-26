@@ -6,10 +6,10 @@
 
 #include "graphical/GraphicalInterface.hpp"
 
-#include "ContinuousRecorder.hpp"
-#include "SpeechRecognizer.hpp"
-#include "TranscriptAnalyzer.hpp"
-#include "IntentEngine.hpp"
+#include "modules/ears/ContinuousRecorder.hpp"
+#include "modules/ears/SpeechRecognizer.hpp"
+#include "modules/brain/TranscriptAnalyzer.hpp"
+#include "modules/brain/IntentEngine.hpp"
 
 #pragma once
 

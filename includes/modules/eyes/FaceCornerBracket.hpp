@@ -27,8 +27,6 @@ class FaceCornerBracket {
 
         void drawCornerRect();
         void drawDottedEdges();
-        void drawScanEffect(int tick);
-        void drawOverlay();
         void draw(int tick);
         void cvDisplay(int tick);
 };

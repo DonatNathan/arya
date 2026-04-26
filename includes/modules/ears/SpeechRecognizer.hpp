@@ -7,7 +7,7 @@
 #include <condition_variable>
 
 #include "whisper.h"
-#include "ContinuousRecorder.hpp"
+#include "modules/ears/ContinuousRecorder.hpp"
 
 #include "Utils.hpp"
 

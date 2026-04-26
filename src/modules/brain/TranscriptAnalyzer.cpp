@@ -1,4 +1,4 @@
-#include "TranscriptAnalyzer.hpp"
+#include "modules/brain/TranscriptAnalyzer.hpp"
 
 TranscriptAnalyzer::TranscriptAnalyzer(std::string& lastTranscript) : a_lastTranscript(lastTranscript)
 {

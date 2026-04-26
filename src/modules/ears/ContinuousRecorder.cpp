@@ -1,4 +1,4 @@
-#include "ContinuousRecorder.hpp"
+#include "modules/ears/ContinuousRecorder.hpp"
 
 ContinuousRecorder::ContinuousRecorder(std::vector<int16_t>& sharedBuffer, std::mutex& mtx) : buffer(sharedBuffer), bufferMutex(mtx)
 {

@@ -1,4 +1,4 @@
-#include "CameraGetter.hpp"
+#include "modules/eyes/CameraGetter.hpp"
 
 CameraGetter::CameraGetter() : i_sprite(i_texture)
 {

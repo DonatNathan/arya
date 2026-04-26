@@ -6,7 +6,7 @@
 
 #include "graphical/OpeningAnimation.hpp"
 #include "graphical/ViewInterface.hpp"
-#include "CameraGetter.hpp"
+#include "modules/eyes/CameraGetter.hpp"
 
 #pragma once
 

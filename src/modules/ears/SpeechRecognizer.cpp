@@ -1,4 +1,4 @@
-#include "SpeechRecognizer.hpp"
+#include "modules/ears/SpeechRecognizer.hpp"
 
 SpeechRecognizer::SpeechRecognizer(std::vector<int16_t>& sharedBuffer, std::mutex& mtx, std::mutex& aryaMutex, std::condition_variable& waitForTranscript, std::string& lastTranscript, ContinuousRecorder& recorder, bool isDebugModeEnabled) : a_audioBuffer(sharedBuffer), a_audioMutex(mtx), a_aryaMutex(aryaMutex), a_waitForTranscript(waitForTranscript), a_lastTranscript(lastTranscript), a_recorder(recorder)
 {
