@@ -76,8 +76,10 @@ std::string Arya::executeCommand(Intent cmd)
             a_interface.close();
             return "Graphical interface closed.";
         case Intent::CAMERA_ON:
+            a_interface.startCamera();
             return "Camera turned on.";
         case Intent::CAMERA_OFF:
+            a_interface.stopCamera();
             return "Camera turned off.";
         case Intent::TURN_OFF:
             exit(0);

@@ -6,6 +6,7 @@
 
 #include "graphical/OpeningAnimation.hpp"
 #include "graphical/ViewInterface.hpp"
+#include "modules/eyes/CameraGetter.hpp"
 
 #pragma once
 
@@ -23,6 +24,7 @@ class GraphicalInterface {
         std::atomic<bool> running = true;
 
         OpeningAnimation i_openingAnimation;
+        CameraGetter i_cameraGetter;
 
         ViewInterface i_mainView;
         ViewInterface i_cameraView;
@@ -40,4 +42,7 @@ class GraphicalInterface {
         void checkEvents();
         void draw();
         void update();
+
+        void startCamera();
+        void stopCamera();
 };
