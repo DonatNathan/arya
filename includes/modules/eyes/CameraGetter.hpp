@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/dnn.hpp>
+#include <opencv2/core/utils/logger.hpp>
 #include <numeric>
 #include <ctime>
 #include <string>

@@ -9,8 +9,8 @@ inline float FRAMERATE_LIMIT = 60;
 
 inline const float FRAME = 1.0 / FRAMERATE_LIMIT;
 
-const float SILENCE_THRESHOLD = 0.001f;
-const float SPEECH_THRESHOLD  = 0.005f;
+const float SILENCE_THRESHOLD = 0.2f;
+const float SPEECH_THRESHOLD  = 0.4f;
 
 // Colors
 

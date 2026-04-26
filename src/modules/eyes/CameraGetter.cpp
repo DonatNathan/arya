@@ -2,6 +2,8 @@
 
 CameraGetter::CameraGetter() : i_sprite(i_texture)
 {
+    cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_ERROR);
+
     faceNet = cv::dnn::readNetFromCaffe(
         "../external/opencv/deploy.prototxt",
         "../external/opencv/res10_300x300_ssd_iter_140000.caffemodel"
@@ -144,8 +146,6 @@ void CameraGetter::update()
 
         bool isMe = (avgDist < 0.3);
 
-        // std::cout << "Dist(" << i << "): " << avgDist << std::endl;
-
         FaceCornerBracket bracket(isMe, i_bgr_frame, faceRect);
         bracket.cvDisplay(i_tick);
 
@@ -180,6 +180,8 @@ void CameraGetter::draw(sf::RenderWindow& window)
 
 void CameraGetter::loadMyFaceDataset(const std::string& folderPath)
 {
+    std::cout << "[EYES] - Loading admin dataset..." << std::endl;
+
     for (const auto& file : std::filesystem::directory_iterator(folderPath))
     {
         cv::Mat img = cv::imread(file.path().string());
@@ -215,4 +217,6 @@ void CameraGetter::loadMyFaceDataset(const std::string& folderPath)
             break;
         }
     }
+
+    std::cout << getColorFromCode(Color::GREEN) << "[EYES] - Admin dataset successfully loaded." << getColorFromCode(Color::RESET) << std::endl;
 }
