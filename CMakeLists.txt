@@ -26,14 +26,21 @@ FetchContent_MakeAvailable(nlohmann_json)
 
 find_package(OpenCV REQUIRED)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(ESPEAK REQUIRED espeak-ng)
+
 add_subdirectory(external/whisper.cpp)
 
 file(GLOB_RECURSE library_sources "src/*.cpp")
 
 add_executable(Arya src/main.cpp ${library_sources})
-target_include_directories(Arya PRIVATE includes)
+target_include_directories(Arya PRIVATE
+    includes
+    ${ESPEAK_INCLUDE_DIRS}
+)
 target_link_libraries(Arya
     ${OpenCV_LIBS}
+    ${ESPEAK_LIBRARIES}
     SFML::Audio
     SFML::Graphics
     SFML::Window

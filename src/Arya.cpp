@@ -52,6 +52,7 @@ void Arya::updateLoop()
 {
     std::string response;
     std::cout << "[TRANSCRIPT] " << a_lastTranscript << "\n";
+    a_speaker.say(a_lastTranscript);
 
     std::string analyzedTranscript = a_analyzer.analyzeTranscript();
 

@@ -10,6 +10,7 @@
 #include "modules/ears/SpeechRecognizer.hpp"
 #include "modules/brain/TranscriptAnalyzer.hpp"
 #include "modules/brain/IntentEngine.hpp"
+#include "modules/mouth/VoiceSpeaker.hpp"
 
 #pragma once
 
@@ -31,6 +32,7 @@ class Arya {
         SpeechRecognizer a_recognizer;
         TranscriptAnalyzer a_analyzer;
         IntentEngine a_iengine;
+        VoiceSpeaker a_speaker;
 
     public:
         Arya(bool isDebugModeEnabled);
