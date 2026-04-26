@@ -1,27 +1,29 @@
-#include <espeak-ng/speak_lib.h>
 #include <string>
-#include <iostream>
 #include <thread>
-
-#include "Globals.hpp"
-#include "Utils.hpp"
+#include <atomic>
+#include <queue>
+#include <mutex>
+#include <condition_variable>
 
 #pragma once
 
 class VoiceSpeaker {
     private:
-        int i_sampleRate = 22050;
-        int i_volume     = 100;
-        int i_speed      = 150;
-        int i_pitch      = 50;
+        std::string i_piperBin   = "../external/piper/piper";
+        std::string i_voiceModel = "../external/piper/voices/libritts.onnx";
+
+        std::queue<std::string>     i_queue;
+        std::mutex                  i_mutex;
+        std::condition_variable     i_cv;
+        std::thread                 i_worker;
+        std::atomic<bool>           i_running = true;
+
+        void workerLoop();
 
     public:
         VoiceSpeaker();
         ~VoiceSpeaker();
 
         void say(const std::string& text);
-        void setVoice(const std::string& voice);
-        void setVolume(int volume);
-        void setSpeed(int speed);
-        void setPitch(int pitch);
+        void setVoiceModel(const std::string& modelPath);
 };
