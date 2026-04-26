@@ -2,13 +2,17 @@
 
 int main(int argc, char **argv)
 {
-    std::cout << "Hello Arya!" << std::endl;
+    bool isDebugModeEnabled = false;
 
-    // MyWindow window("Arya", sf::VideoMode::getDesktopMode());
-    Arya arya;
+    if (argc > 1) {
+        if (std::string(argv[1]) == "--debug") {
+            isDebugModeEnabled = true;
+            std::cout << getColorFromCode(Color::YELLOW) << "[ARYA] - Launched with debug mode enabled." << getColorFromCode(Color::RESET) << std::endl;
+        }
+    }
+
+    Arya arya(isDebugModeEnabled);
     arya.runArya();
-
-    // window.Init();
-
+    
     return 0;
 };

@@ -48,3 +48,6 @@ build
 
 # External folder
 external
+
+# Models folder
+models
